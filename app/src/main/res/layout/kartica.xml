@@ -14,9 +14,9 @@
             >
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/person_photo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/post_image"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="16dp"
@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/title"
-                android:layout_toRightOf="@+id/person_photo"
+                android:layout_toRightOf="@+id/post_image"
                 android:layout_alignParentTop="true"
                 android:textSize="30sp"
                 />
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/content"
-                android:layout_toRightOf="@+id/person_photo"
+                android:layout_toRightOf="@+id/post_image"
                 android:layout_below="@+id/title"
                 />
 

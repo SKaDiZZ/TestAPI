@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        postsAdapter = new PostsAdapter(posts);
+        postsAdapter = new PostsAdapter(MainActivity.this, posts);
         recyclerView.setAdapter(postsAdapter);
 
         ExclusiveAPI task = new ExclusiveAPI();
@@ -112,7 +112,9 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject contentObject = object.getJSONObject("excerpt");
                     Spanned content = Html.fromHtml(contentObject.getString("rendered"));
 
-                    Post post = new Post(title, content.toString(), object.optString("featured_image"));
+                    String thumbnail = object.getString("featured_image_thumbnail_url");
+
+                    Post post = new Post(title, content.toString(), thumbnail);
 
                     posts.add(post);
 
