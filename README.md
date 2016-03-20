@@ -1,6 +1,6 @@
 # TestAPI
 
-This little test app is using Wordpress REST API v2 to fetch data from Wordpress website as JSON and display it in recycler view. App is made for learning and practice, it should give you idea how to work with Wordpress API v2 and handle data from responses.
+This little test app is using Wordpress REST API v2 to fetch data from Wordpress website as JSON and display it in recycler view. App is made for learning and practice, it should give you idea how to work with Wordpress API v2 and handle data from responses in your android apps.
 
 * Using 
   * SQUARE OKHTTP > https://github.com/square/okhttp
