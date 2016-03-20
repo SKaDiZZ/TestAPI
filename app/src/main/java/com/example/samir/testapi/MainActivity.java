@@ -104,9 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
             if(null == array) return;
 
-            int length = array.length();
-
-            for(int i = 0; i < length; i++) {
+            for(int i = 0; i < array.length(); i++) {
 
                 JSONObject object = array.optJSONObject(i);
 
