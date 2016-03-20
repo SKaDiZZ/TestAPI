@@ -24,27 +24,35 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    static final String POSTS_URL = "http://exclusiveapartmentssarajevo.com//wp-json/wp/v2/posts/";
+
+    Toolbar toolbar;
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     PostsAdapter postsAdapter;
+
     ArrayList<Post> posts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Exclusive Apartments");
         setSupportActionBar(toolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
+
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
+
         postsAdapter = new PostsAdapter(MainActivity.this, posts);
         recyclerView.setAdapter(postsAdapter);
 
         ExclusiveAPI task = new ExclusiveAPI();
-        task.execute();
+        task.execute(POSTS_URL);
 
     }
 
@@ -53,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected JSONArray doInBackground(String... params) {
 
-            String url = "http://exclusiveapartmentssarajevo.com//wp-json/wp/v2/posts/";
+            String url = params[0];
 
             OkHttpClient client = new OkHttpClient();
             Request.Builder builder = new Request.Builder();
@@ -62,18 +70,18 @@ public class MainActivity extends AppCompatActivity {
 
             try {
 
-                Response response = client.newCall(request).execute();
-                String json = response.body().string();
+                    Response response = client.newCall(request).execute();
+                    String json = response.body().string();
 
-                try {
+                    try {
 
-                    return new JSONArray(json);
+                        return new JSONArray(json);
 
-                } catch (JSONException e) {
+                    } catch (JSONException e) {
 
-                    e.printStackTrace();
+                        e.printStackTrace();
 
-                }
+                    }
 
 
             } catch (IOException e) {
@@ -104,25 +112,9 @@ public class MainActivity extends AppCompatActivity {
 
                 JSONObject object = array.optJSONObject(i);
 
-                try {
+                Post post = Post.parse(object);
+                posts.add(post);
 
-                    JSONObject titleObject = object.getJSONObject("title");
-                    String title = titleObject.getString("rendered");
-
-                    JSONObject contentObject = object.getJSONObject("excerpt");
-                    Spanned content = Html.fromHtml(contentObject.getString("rendered"));
-
-                    String thumbnail = object.getString("featured_image_thumbnail_url");
-
-                    Post post = new Post(title, content.toString(), thumbnail);
-
-                    posts.add(post);
-
-                } catch (JSONException e) {
-
-                    e.printStackTrace();
-
-                }
             }
 
             onProgressUpdate();
